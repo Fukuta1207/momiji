@@ -178,9 +178,12 @@ body {
     text-decoration: none;
     overflow: hidden;
   }
+.hamburger-morph.active .hamburger-morph__line {
+  stroke: #fff;  /* 白などコントラストが強い色に */
+}
 
   /* ホバーで上下文字が入れ替わる仕掛け */
-  .nav-morph__text,
+/*   .nav-morph__text,
   .nav-morph__hover {
     display: block;
     transition: transform 0.3s ease;
@@ -197,7 +200,7 @@ body {
   .nav-morph__link:hover .nav-morph__hover {
     transform: translateY(-100%);
   }
-}
+} */
 
 /* スクロール用余白 (ヘッダー固定) */
 .main {
