@@ -1,13 +1,10 @@
-function toggleNav() {
-  var body = document.body;
-  var hamburger = document.getElementById('js-hamburger');
-  var blackBg = document.getElementById('js-black-bg');
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.getElementById("hamburgerMorph");
+  const navMorph = document.getElementById("navMorph");
 
-  hamburger.addEventListener('click', function() {
-    body.classList.toggle('nav-open');
+  // ボタンがクリックされたら、アイコンとメニューのactiveクラスをトグル
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navMorph.classList.toggle("active");
   });
-  blackBg.addEventListener('click', function() {
-    body.classList.remove('nav-open');
-  });
-}
-toggleNav();
+});
