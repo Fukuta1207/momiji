@@ -178,9 +178,18 @@ body {
     text-decoration: none;
     overflow: hidden;
   }
-.hamburger-morph.active .hamburger-morph__line {
-  stroke: #fff;  /* 白などコントラストが強い色に */
+.hamburger-morph__line {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 6;
+  transition: stroke-dasharray 600ms, stroke-dashoffset 600ms;
 }
+
+.hamburger-morph.active .hamburger-morph__line {
+  stroke: #fff;      /* 変えたいなら #eee, #ff0 etc. */
+  stroke-width: 8;
+}
+
 
   /* ホバーで上下文字が入れ替わる仕掛け */
 /*   .nav-morph__text,
