@@ -2,70 +2,784 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Morphing Hamburger Menu Example</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- PC表示用CSS & モーフィングCSSまとめたもの -->
-  <link rel="stylesheet" href="assets/css/hamburger-menu.css">
+  <title>MIYA Fukutaro | Theoretical Physics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MIYA Fukutaro - Theoretical physicist. Research in quantum field theory, monopoles, and gauge symmetry breaking.">
+  <style>
+    :root {
+      --bg-main: #ffffff;
+      --bg-alt: #f5f7fb;
+      --accent: #004f9f;
+      --accent-light: #e5f0ff;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --border-soft: #e0e4ef;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+      color: var(--text-main);
+      background: var(--bg-main);
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* HEADER / NAV */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-menu a {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .nav-menu a:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-menu .highlight {
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+
+    /* MOBILE NAV */
+    .nav-toggle {
+      display: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        position: fixed;
+        inset: 56px 0 auto 0;
+        background: rgba(255, 255, 255, 0.98);
+        flex-direction: column;
+        padding: 0.75rem 1.25rem 1rem;
+        border-bottom: 1px solid var(--border-soft);
+        transform: translateY(-120%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+      }
+      .nav-menu.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .nav-toggle {
+        display: block;
+      }
+    }
+
+    /* LAYOUT */
+    main {
+      padding-bottom: 3rem;
+    }
+
+    section {
+      padding: 3.5rem 1.25rem;
+    }
+
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-lead {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* HERO */
+    .hero {
+      padding-top: 4.5rem;
+      padding-bottom: 4rem;
+      background: radial-gradient(circle at top left, var(--accent-light), #ffffff 55%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.0rem, 3vw, 2.6rem);
+      font-weight: 750;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-meta span {
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      font-size: 0.9rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-ghost {
+      background: #ffffff;
+      border-color: var(--border-soft);
+      color: var(--text-main);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 1.4rem 1.5rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border-soft);
+      font-size: 0.9rem;
+    }
+
+    .hero-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+    }
+
+    .hero-card dl {
+      display: grid;
+      grid-template-columns: 4.5rem minmax(0, 1fr);
+      row-gap: 0.35rem;
+      column-gap: 0.75rem;
+      margin-top: 0.4rem;
+    }
+
+    .hero-card dt {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hero-card dd {
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* PROFILE */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.6fr);
+      gap: 2rem;
+    }
+
+    .profile-text p + p {
+      margin-top: 0.9rem;
+    }
+
+    .profile-list {
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    .profile-list li + li {
+      margin-top: 0.35rem;
+    }
+
+    .profile-card {
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      padding: 1.2rem 1.3rem;
+      background: #ffffff;
+      font-size: 0.9rem;
+    }
+
+    .profile-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    @media (max-width: 900px) {
+      .profile-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* RESEARCH / SERVICE-LIKE GRID */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.3rem;
+      margin-top: 1.2rem;
+    }
+
+    .card {
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      background: #ffffff;
+      padding: 1.3rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 170px;
+    }
+
+    .card-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.45rem;
+      font-weight: 600;
+    }
+
+    .card-title {
+      font-size: 1.0rem;
+      font-weight: 650;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-body {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 900px) {
+      .cards-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* PUBLICATIONS */
+    .pub-list {
+      list-style: none;
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-soft);
+      margin-top: 1rem;
+    }
+
+    .pub-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .pub-title {
+      font-weight: 600;
+    }
+
+    .pub-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* NEWS / TALKS */
+    .news-tabs {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .news-tab {
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      cursor: default;
+    }
+
+    .news-tab.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .news-list {
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    .news-item {
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.4rem;
+    }
+
+    .news-date {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      min-width: 6rem;
+    }
+
+    .news-tag {
+      font-size: 0.75rem;
+      padding: 0.10rem 0.55rem;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    /* CONTACT */
+    .contact {
+      background: var(--bg-alt);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .contact-card {
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      padding: 1.3rem 1.4rem;
+      background: #ffffff;
+      font-size: 0.9rem;
+    }
+
+    .contact-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .contact-list {
+      list-style: none;
+      font-size: 0.9rem;
+    }
+
+    .contact-list li + li {
+      margin-top: 0.45rem;
+    }
+
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 1.2rem 1.25rem 1.6rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: #ffffff;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- PC版のヘッダー -->
-  <header class="header">
-    <div class="header_inner">
-      <div class="logo">
-        <h1 class="title">My Site</h1>
+<header>
+  <div class="nav-inner">
+    <div class="nav-logo">MIYA / THEORETICAL PHYSICS</div>
+    <div class="nav-toggle" id="navToggle">☰</div>
+    <nav class="nav-menu" id="navMenu">
+      <a href="#top">TOP</a>
+      <a href="#profile">PROFILE</a>
+      <a href="#research">RESEARCH</a>
+      <a href="#publications">PUBLICATIONS</a>
+      <a href="#news">NEWS</a>
+      <a href="#contact" class="highlight">CONTACT</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO / TOP -->
+  <section id="top" class="hero">
+    <div class="section-inner hero-grid">
+      <div>
+        <div class="hero-eyebrow">THEORETICAL PHYSICS / QUANTUM FIELD THEORY</div>
+        <h1 class="hero-title">
+          Monopoles, gauge symmetry breaking,<br>
+          and the structure of quantum fields.
+        </h1>
+        <p class="hero-subtitle">
+          宮 福太朗（Miya Fukutaro）<br>
+          大阪大学大学院 理学研究科 物理学専攻 M2 / 理論物理学（素粒子論）
+        </p>
+        <div class="hero-meta">
+          <span>Research areas: monopoles, gauge theories, cosmology</span><br>
+          <span>Languages: 日本語 / English</span>
+        </div>
+        <div class="hero-buttons">
+          <a href="#research" class="btn-primary">研究内容を見る</a>
+          <a href="#publications" class="btn-ghost">業績一覧</a>
+        </div>
+        <div class="hero-note">
+          This site is a personal homepage for research and academic activities.
+        </div>
       </div>
-      <!-- ここにPC版のナビ（769px以上で表示） -->
-      <nav class="nav-pc">
-        <ul>
-          <li><a href="#">Top</a></li>
-          <li><a href="#">News</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
+      <aside class="hero-card">
+        <h3>PROFILE SNAPSHOT</h3>
+        <dl>
+          <dt>Name</dt><dd>宮 福太朗（MIYA Fukutaro）</dd>
+          <dt>Affiliation</dt><dd>大阪大学大学院 理学研究科 物理学専攻</dd>
+          <dt>Field</dt><dd>Theoretical particle physics, quantum field theory</dd>
+          <dt>Topics</dt><dd>Magnetic monopoles, gauge symmetry, topological defects</dd>
+        </dl>
+      </aside>
     </div>
-  </header>
+  </section>
 
-  <!-- モバイル版モーフィングハンバーガー（768px以下で表示） -->
-  <!-- ボタンをSVGで描画 -->
-  <button class="hamburger-morph" id="hamburgerMorph" aria-label="Toggle Menu">
-    <svg class="hamburger-morph__icon" viewBox="0 0 100 100">
-      <path class="hamburger-morph__line" d="M 30 37 H 70"></path>
-      <path class="hamburger-morph__line" d="M 30 50 H 70"></path>
-      <path class="hamburger-morph__line" d="M 30 63 H 70"></path>
-    </svg>
-  </button>
+  <!-- PROFILE -->
+  <section id="profile">
+    <div class="section-inner">
+      <div class="section-label">PROFILE</div>
+      <h2 class="section-title">自己紹介 / Brief Bio</h2>
+      <div class="profile-grid">
+        <div class="profile-text">
+          <p>
+            理論物理学（素粒子論）を専門とし、ゲージ対称性の自発的破れやモノポールなどの
+            トポロジカル欠陥の理論的側面を研究しています。特に、マルチステージの自発的対称性の破れにおける
+            モノポールの構造と安定性、電荷量子化条件との関係に関心があります。
+          </p>
+          <p>
+            このサイトでは、研究テーマの概要、プレプリントや論文、学会発表・セミナーなどの情報をまとめています。
+            また、将来的にはスライドや講義ノート、メモなども公開していく予定です。
+          </p>
+        </div>
+        <div>
+          <div class="profile-card">
+            <h3>略歴</h3>
+            <ul class="profile-list">
+              <li>2024–　大阪大学大学院 理学研究科 物理学専攻 M2</li>
+              <li>2022　大阪大学 理学部 物理学科 卒業</li>
+              <li>2021　素粒子論・場の量子論を中心に研究を開始</li>
+            </ul>
+          </div>
+          <div style="height:0.7rem;"></div>
+          <div class="profile-card">
+            <h3>興味のあるトピック</h3>
+            <ul class="profile-list">
+              <li>・磁気モノポールと電荷量子化</li>
+              <li>・ゲージ群・ホモトピー群・1-form対称性</li>
+              <li>・電弱対称性の破れと宇宙論（インフレーション・バリオン数生成）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- モバイル用 メニュー -->
-  <div class="nav-morph" id="navMorph">
-    <div class="nav-morph__wrapper">
-      <ul class="nav-morph__list">
-        <li class="nav-morph__item"><a href="#" class="nav-morph__link">
-          <span class="nav-morph__text">Top</span>
-          <span class="nav-morph__hover">Top</span>
-        </a></li>
-        <li class="nav-morph__item"><a href="#" class="nav-morph__link">
-          <span class="nav-morph__text">News</span>
-          <span class="nav-morph__hover">News</span>
-        </a></li>
-        <li class="nav-morph__item"><a href="#" class="nav-morph__link">
-          <span class="nav-morph__text">About</span>
-          <span class="nav-morph__hover">About</span>
-        </a></li>
-        <li class="nav-morph__item"><a href="#" class="nav-morph__link">
-          <span class="nav-morph__text">Contact</span>
-          <span class="nav-morph__hover">Contact</span>
-        </a></li>
+  <!-- RESEARCH -->
+  <section id="research" style="background: var(--bg-alt);">
+    <div class="section-inner">
+      <div class="section-label">RESEARCH</div>
+      <h2 class="section-title">研究テーマ / Research Topics</h2>
+      <p class="section-lead">
+        現在取り組んでいる主な研究テーマです。内容は随時更新していきます。
+      </p>
+
+      <div class="cards-grid">
+        <article class="card">
+          <div>
+            <div class="card-label">01 / MONOPOLES</div>
+            <h3 class="card-title">多段階自発的対称性の破れとモノポール</h3>
+            <p class="card-body">
+              多段階のゲージ対称性の破れ
+              \( G \rightarrow H \rightarrow \cdots \) におけるモノポール解の構造を解析し、
+              磁気電荷のラティス構造や有効理論の記述との対応を調べています。
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div>
+            <div class="card-label">02 / GAUGE THEORY</div>
+            <h3 class="card-title">ゲージ群・ホモトピー・1-form対称性</h3>
+            <p class="card-body">
+              電荷量子化やトップチャージの分類における
+              ホモトピー群や1-form対称性の役割を、具体的なゲージ理論モデルを通して検討しています。
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div>
+            <div class="card-label">03 / COSMOLOGY</div>
+            <h3 class="card-title">電弱スケール宇宙論と位相的欠陥</h3>
+            <p class="card-body">
+              インフレーションや電弱バリオン数生成の文脈で、位相的欠陥がどのような役割を果たし得るか、
+              有効ポテンシャルや場のダイナミクスの観点から調査しています。
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="section-inner">
+      <div class="section-label">PUBLICATIONS</div>
+      <h2 class="section-title">論文・プレプリント / Publications & Preprints</h2>
+      <p class="section-lead">
+        まだプレプリント準備中の段階ですが、公開できる成果から順次追加していきます。
+      </p>
+
+      <ul class="pub-list">
+        <li class="pub-item">
+          <div class="pub-title">
+            (準備中) Analysis of Monopoles in Multi-Stage Spontaneous Gauge Symmetry Breaking
+          </div>
+          <div class="pub-meta">
+            F. Miya, in preparation.
+          </div>
+        </li>
+        <li class="pub-item">
+          <div class="pub-title">
+            （サンプル）Title of a paper or preprint goes here
+          </div>
+          <div class="pub-meta">
+            F. Miya, Journal / arXiv:xxxx.xxxxx, 20XX.
+          </div>
+        </li>
       </ul>
     </div>
+  </section>
+
+  <!-- NEWS / TALKS -->
+  <section id="news" style="background: var(--bg-alt);">
+    <div class="section-inner">
+      <div class="section-label">NEWS</div>
+      <h2 class="section-title">お知らせ・発表 / News & Talks</h2>
+      <p class="section-lead">
+        学会発表・セミナー・研究会などの記録です。exeo-esm の NEWS セクションのように時系列で管理しています。
+      </p>
+
+      <div class="news-tabs">
+        <div class="news-tab active">すべて</div>
+        <div class="news-tab">発表</div>
+        <div class="news-tab">セミナー</div>
+        <div class="news-tab">その他</div>
+      </div>
+
+      <ul class="news-list">
+        <li class="news-item">
+          <div class="news-date">2025.02.15</div>
+          <div>
+            <span class="news-tag">発表</span>
+            <span>国際研究会にて口頭発表（大阪）</span>
+          </div>
+        </li>
+        <li class="news-item">
+          <div class="news-date">2024.11.30</div>
+          <div>
+            <span class="news-tag">セミナー</span>
+            <span>研究室セミナー「Monopoles and multi-stage symmetry breaking」</span>
+          </div>
+        </li>
+        <li class="news-item">
+          <div class="news-date">2024.04.01</div>
+          <div>
+            <span class="news-tag">その他</span>
+            <span>大阪大学大学院 理学研究科 物理学専攻 M2 進学</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="section-inner">
+      <div class="section-label">CONTACT</div>
+      <h2 class="section-title">お問い合わせ / Contact</h2>
+      <div class="contact-grid">
+        <div>
+          <p class="section-lead">
+            共同研究やセミナーでの講演依頼などがありましたら、所属機関のメールアドレス宛にご連絡ください。
+            返信には少しお時間をいただく場合があります。
+          </p>
+          <div class="contact-card">
+            <h3>メールでの連絡</h3>
+            <ul class="contact-list">
+              <li>Affiliation: 大阪大学大学院 理学研究科 物理学専攻</li>
+              <li>Email: <span>example[at]phys.sci.osaka-u.ac.jp</span></li>
+              <li>※ [at] を @ に置き換えてください。</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="contact-card">
+            <h3>その他のリンク</h3>
+            <ul class="contact-list">
+              <li><a href="#">Inspire / arXiv Profile（準備中）</a></li>
+              <li><a href="#">ResearcherID / ORCID（準備中）</a></li>
+              <li><a href="#">Slides & Notes（今後公開予定）</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>© MIYA Fukutaro</div>
+    <div class="footer-links">
+      <span>Last update: 2025-12-06</span>
+    </div>
   </div>
+</footer>
 
-  <main class="main">
-    <p style="margin-top:120px;">Lorem ipsum dolor sit amet...</p>
-  </main>
+<script>
+  // Simple mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
 
-  <!-- スクリプトでモーフィングのトグルを実装 -->
-  <script src="assets/js/hamburger-menu.js"></script>
+  navToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+  });
+
+  // Close menu when clicking a link (on mobile)
+  navMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navMenu.classList.remove('open');
+    });
+  });
+</script>
+
 </body>
 </html>
