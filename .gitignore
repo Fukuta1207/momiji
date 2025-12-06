@@ -1,0 +1,39 @@
+# === LaTeX intermediate and output files ===
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+
+# === VSCode settings (optional) ===
+.vscode/
+
+# === Mac の隠しファイル ===
+.DS_Store
+
+# === 一時作業ファイル ===
+*~
+*.swp
+*.bak
+*.tmp
+
+# === latexmk が生成するもの（再確認） ===
+*.dvi
+*.xdv
+*.ps
+
+# === その他（日本語LaTeXで生成される場合あり） ===
+*.jbibtexlog
+*.blg
+*.bbl
