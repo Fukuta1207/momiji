@@ -501,3 +501,14 @@ footer {
   gap: 1rem;
   flex-wrap: wrap;
 }
+
+.profile-img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 999px;
+  margin-top: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
