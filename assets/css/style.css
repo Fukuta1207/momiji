@@ -76,8 +76,8 @@ header {
   margin-right: 0.01rem;
 }
 .nav-menu a:last-child {
-  margin-left: 3.0rem;  /* CONTACTとの間隔を拡張 */
-  margin-right: 0;      /* 右は不要 */
+  /* margin-left: 3.0rem; */
+  padding-left: 3.0rem
 }
 
 .nav-menu a:hover {
