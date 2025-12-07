@@ -151,10 +151,6 @@ header {
     pointer-events: none;
     transition: transform 0.2s ease-out, opacity 0.2s ease-out;
   }
-  .nav-menu a:last-child {
-    /* margin-left: 3.0rem; */
-    padding-left: 3.0rem;
-  }
   .nav-menu.open {
     transform: translateY(0);
     opacity: 1;
