@@ -30,3 +30,82 @@ git push -u origin main
 
 git status       # 現在の状態を見る
 git remote -v    # リモート設定を確認
+
+#############################################
+# ✅ 別のデバイスで GitHub リポジトリを使う手順（Fukuta1207/momiji）
+#############################################
+
+# === 1. SSH鍵を新規作成（Fukuta1207アカウント用）===
+ssh-keygen -t ed25519 -C "1207hofutori@gmail.com" -f ~/.ssh/id_ed25519_fukuta1207
+
+# → パスフレーズは空のまま Enter 2回でもOK
+
+# === 2. 公開鍵を表示して GitHub に登録 ===
+cat ~/.ssh/id_ed25519_fukuta1207.pub
+
+# ↑で出てきた "ssh-ed25519 AAAA..." をコピーして、
+# GitHub（Fukuta1207アカウント）ログイン後に以下で登録：
+# https://github.com/settings/ssh/new
+
+# Title: このPCの名前（例：r06M105）
+# Key: 上でコピーした公開鍵
+
+# === 3. SSH 設定ファイル ~/.ssh/config を編集 ===
+nano ~/.ssh/config
+
+# 以下を追記（なければ新規作成）
+# ------------------------------------
+# プライベート GitHub（Fukuta1207 アカウント用）
+Host github-fukuta1207
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_fukuta1207
+  IdentitiesOnly yes
+# ------------------------------------
+
+# 保存: Ctrl + O → Enter
+# 終了: Ctrl + X
+
+# === 4. 接続テスト（Fukuta1207 鍵で接続）===
+ssh -T git@github-fukuta1207
+
+# 成功時:
+# Hi Fukuta1207! You've successfully authenticated, but GitHub does not provide shell access.
+
+# === 5. momiji リポジトリを clone（Documents フォルダに） ===
+cd ~/Documents
+git clone git@github-fukuta1207:Fukuta1207/momiji.git
+
+# === 6. ディレクトリに入る ===
+cd momiji
+
+# === 7. 必要に応じて中身を確認 ===
+ls
+
+# === 8. Cursor エディタでプロジェクトとして開く方法 ===
+# A) ターミナルから開く（推奨）
+cursor .
+
+# B) Cursor の GUI から：
+# - [Open Project] → /Users/fukutaromiya/Documents/momiji を選択
+
+# 1. 状況を確認（何が変わっているか）
+git status
+
+# 2. 全ての変更をステージ（コミット対象）に追加
+git add .
+
+# 3. コミットメッセージをつけて変更を保存
+git commit -m "変更内容の説明を書く（例：sec 2.1修正、図追加など）"
+
+# 4. GitHub に push（送信）
+git push
+
+
+# === 10. リモートURL確認（正しく設定されたか）===
+git remote -v
+
+# 出力がこうなっていればOK：
+# origin  git@github-fukuta1207:Fukuta1207/momiji.git (fetch)
+# origin  git@github-fukuta1207:Fukuta1207/momiji.git (push)
+
