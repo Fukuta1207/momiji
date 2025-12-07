@@ -89,6 +89,7 @@ cursor .
 # B) Cursor の GUI から：
 # - [Open Project] → /Users/fukutaromiya/Documents/momiji を選択
 
+
 # 1. 状況を確認（何が変わっているか）
 git status
 
