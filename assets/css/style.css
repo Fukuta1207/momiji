@@ -77,7 +77,7 @@ header {
 }
 .nav-menu a:last-child {
   /* margin-left: 3.0rem; */
-  padding-left: 3.0rem
+  padding-left: 3.0rem;
 }
 
 .nav-menu a:hover {
