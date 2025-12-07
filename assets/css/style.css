@@ -61,26 +61,73 @@ header {
 
 .nav-menu {
   display: flex;
-  gap: 1.5rem;
+  /* gap: 1.5rem; */
   font-size: 0.9rem;
 }
 
 .nav-menu a {
   color: var(--text-main);
   font-weight: 500;
+  padding: 0.35rem 0.9rem;      /* 追加：すべてのリンクに同じ余白 */
+  border: 1px solid transparent; /* 追加：全リンクに透明ボーダー → 高さが揃う */
+  border-radius: 999px;         /* 追加：見た目を統一 */
+  box-sizing: border-box;       /* 追加：サイズのズレ防止 */
+  transition: all 0.2s ease; /* ← 追加：hover時のアニメーション */
+  margin-right: 0.01rem;
+}
+.nav-menu a:last-child {
+  margin-left: 3.0rem;  /* CONTACTとの間隔を拡張 */
+  margin-right: 0;      /* 右は不要 */
 }
 
 .nav-menu a:hover {
   color: var(--accent);
-  text-decoration: none;
+  /* text-decoration: none; */
+  background-color: var(--accent-light); /* ← 追加：背景色がつく */
+  transform: translateY(-1px);           /* ← 追加：少し浮く */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); /* ← 追加：うっすら影をつける */
 }
 
-.nav-menu .highlight {
+/* .nav-menu .highlight {
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
   border: 1px solid var(--accent);
   color: var(--accent);
+} */
+.nav-menu .highlight {
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border-color: var(--accent);  /* 見た目の変化はここだけでOK */
+  color: var(--accent);
+  transition: all 0.2s ease;
 }
+.nav-menu .highlight:hover {
+  background-color: var(--accent-light); /* ホバー時の背景 */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+
+.nav-menu .lang-switch {
+  font-weight: 600;
+  color: var(--accent);
+  border: none;
+  background-color: transparent;
+  padding: 0.35rem 0.9rem;
+  font-size: 1.0rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 6px; /* ✅ 常に角丸（四角形）にする */
+  /* transition for hover */
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-menu .lang-switch:hover {
+  background-color: var(--accent-light);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 
 /* MOBILE NAV */
 .nav-toggle {
