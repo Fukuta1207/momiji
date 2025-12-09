@@ -110,3 +110,88 @@ git remote -v
 # origin  git@github-fukuta1207:Fukuta1207/momiji.git (fetch)
 # origin  git@github-fukuta1207:Fukuta1207/momiji.git (push)
 
+git branch で現在地を確認
+
+git status
+git pull
+
+# =========================================
+# 0. 複数人で作業する場合の流れ
+# =========================================
+
+# =========================================
+# 0. 最初に main ブランチを最新にしておく（初回だけでなく時々やると安全）
+# =========================================
+git switch main           # あるいは: git checkout main
+git pull origin main
+
+# =========================================
+# 1. 作業用ブランチ branch_miya を作成して、そこに移動（最初の1回だけ）
+# =========================================
+git switch -c branch_miya   # あるいは: git checkout -b branch_miya
+
+
+# =========================================
+# 2. 作業（ファイル編集など） → その日の終わりにコミット & プッシュ
+#    ※この部分は「作業した日ごと」に毎回行う
+# =========================================
+
+# 変更状況の確認（任意）
+git status
+
+# 変更をステージング（全部まとめてで良ければ）
+git add .
+
+# コミットメッセージはわかりやすく書く
+git commit -m "HP の CSS を調整"   # 例
+
+# リモートにアップロード（初回だけ -u を付けると以降 git push だけでOK）
+git push -u origin branch_miya
+
+# 2回目以降の同じブランチでの作業終わりは
+# git push
+# だけでよい
+
+
+# =========================================
+# 3. 別デバイスで翌日以降に続きをやるとき
+# =========================================
+cd /path/to/your/repository   # リポジトリのディレクトリへ移動
+
+# リモートから最新の情報を取得
+git fetch origin
+
+# 作業ブランチに移動（既に作った branch_miya をチェックアウト）
+git switch branch_miya        # or: git checkout branch_miya
+
+# リモートから自分のブランチの最新を取り込む
+git pull
+
+# あとはまた編集 → 2 の流れで add / commit / push
+
+
+# =========================================
+# 4. 機能が完成したら（= main に取り込みたい時）
+#    通常は GitHub 上で Pull Request を作成して merge する
+# =========================================
+
+# ローカルではまず最新の状態を push しておく
+git status           # 変更が残っていないか確認
+git push             # すべてのコミットが origin/branch_miya に上がっている状態にする
+
+# その後：
+# 1. ブラウザで GitHub を開く
+# 2. branch_miya から main への Pull Request (PR) を作成
+# 3. 差分を確認して問題なければ PR を merge（"Merge pull request" ボタン）
+
+
+# =========================================
+# 5. merge 後にブランチを削除したい場合（任意）
+# =========================================
+
+# リモートブランチ削除（GitHub 上の branch_miya を消す）
+git push origin --delete branch_miya
+
+# ローカルブランチ削除（自分の PC 内の branch_miya を消す）
+git switch main       # 別ブランチ（例: main）に移動してから
+git branch -d branch_miya
