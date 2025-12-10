@@ -195,3 +195,80 @@ git push origin --delete branch_miya
 # ローカルブランチ削除（自分の PC 内の branch_miya を消す）
 git switch main       # 別ブランチ（例: main）に移動してから
 git branch -d branch_miya
+
+【GitHub Pages を Google 検索に表示させるための完全手順まとめ】
+1. Search Console に正しい URL を登録
+https://search.google.com/search-console/about?hl=ja
+
+Search Console →「URL プレフィックス」で以下を入力：
+https://fukuta1207.github.io/momiji/
+
+
+（※ sitemap.xml を含めない）
+
+2. 所有権確認ファイル（googleXXXX.html）をアップロード
+
+Search Console で提示された HTML ファイル（例：google783b8b1580e6ad56.html）を
+GitHub Pages のルートに置く：
+
+00_momiji/
+ ├─ index.html
+ ├─ google783b8b1580e6ad56.html
+ ├─ sitemap.xml
+ ├─ assets/
+ ├─ img/
+ └─ ...
+
+アップロード後、次がブラウザで表示できるか確認：
+https://fukuta1207.github.io/momiji/google783b8b1580e6ad56.html
+
+表示されたら、Search Console の「確認」ボタンを押す。
+
+3. （推奨）index.html に所有権確認用 meta タグも追加
+Search Console の「HTML タグ」方式のタグを <head> 内に追加：
+
+<meta name="google-site-verification" content="XXXXXXX" />
+
+※この方法を追加しておくと、所有権がより安定する。
+
+4. sitemap.xml を作成し、GitHub のルートに置く
+内容例：
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://fukuta1207.github.io/momiji/</loc>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+
+
+公開 URL が開けることを確認：
+https://fukuta1207.github.io/momiji/sitemap.xml
+
+5. Search Console に sitemap を登録
+Search Console →「サイトマップ」
+以下を入力して「送信」：
+
+sitemap.xml
+
+または：
+
+https://fukuta1207.github.io/momiji/sitemap.xml
+
+6. URL 検査でトップページを「インデックス登録リクエスト」
+Search Console 左上検索欄に以下を入力：
+
+https://fukuta1207.github.io/momiji/
+
+
+→「インデックス登録をリクエスト」を押す。
+
+7. インデックスされるまで待つ
+
+速い場合：数時間
+
+通常：数日〜1週間
+
+遅い場合：2〜4 週間
+
+（新しい GitHub Pages はインデックスに時間がかかることがある）
