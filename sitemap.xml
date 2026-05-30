@@ -4,4 +4,8 @@
     <loc>https://fukuta1207.github.io/momiji/</loc>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://fukuta1207.github.io/momiji/en/indexENG.html</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
